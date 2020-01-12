@@ -21,9 +21,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean saveUser(User user) {
         Optional<User> existingUser = userRepository.findById(user.getId());
-        if (existingUser.isPresent()) {
-            //throw new UserAlreadyExistsException("User with id already exists");
-        }
+//        if (existingUser.isPresent()) {
+//            //throw new UserAlreadyExistsException("User with id already exists");
+//        }
         userRepository.save(user);
         return true;
     }
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User updateUser) {
         final User user = userRepository.findById(updateUser.getId()).orElse(null);
 //        if (user == null) {
-//            throw new MovieNotFoundException("Could not update. Movie not found");
+//            throw new UserNotFoundException("Could not update. User not found");
 //        }
         //user.setComments(updateUser.getComments());
         userRepository.save(user);
@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUserById(int id) {
         final User user = userRepository.findById(id).orElse(null);
-//        if (movie == null) {
-//            throw new MovieNotFoundException("Could not delete. Movie not found");
+//        if (user == null) {
+//            throw new UserNotFoundException("Could not delete. User not found");
 //        }
         userRepository.delete(user);
         return true;

@@ -34,15 +34,15 @@ public class UserController {
     }
 
     @GetMapping("/listofusers")
-    public ResponseEntity<?> getMyMovies(final HttpServletRequest request, final HttpServletResponse response) {
+    public ResponseEntity<?> getAllUsers() {
 
         List<User> users = userService.getUsers();
         ResponseEntity<?> responseEntity = new ResponseEntity<List<User>>(users, HttpStatus.OK);
         return responseEntity;
     }
 
-    @PutMapping(path = "/user/{id}")
-    public ResponseEntity<?> updateUserById(@PathVariable("id") final Integer id,@RequestBody User user){
+    @PutMapping(path = "/updateuser/{id}")
+    public ResponseEntity<?> updateUserById(@RequestBody User user){
 
         ResponseEntity<?> responseEntity;
        // try {
@@ -55,13 +55,13 @@ public class UserController {
 
     }
 
-    @DeleteMapping(path = "/user/{id}")
+    @DeleteMapping(path = "/removeuser/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable("id") final int id) {
         ResponseEntity<?> responseEntity;
         //try {
             userService.deleteUserById(id);
-            responseEntity = new ResponseEntity<String>("Movie deleted successfully", HttpStatus.OK);
-//        } catch (MovieNotFoundException e) {
+            responseEntity = new ResponseEntity<String>("User deleted successfully", HttpStatus.OK);
+//        } catch (UserNotFoundException e) {
 //            responseEntity = new ResponseEntity<String>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.NOT_FOUND);
 //        }
         return responseEntity;
