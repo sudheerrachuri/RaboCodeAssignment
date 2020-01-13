@@ -1,5 +1,6 @@
 package com.cts.codeassignment.FormSubmission.controller;
 
+import com.cts.codeassignment.FormSubmission.Exception.UserNotFoundException;
 import com.cts.codeassignment.FormSubmission.beans.User;
 import com.cts.codeassignment.FormSubmission.service.UserService;
 import org.slf4j.Logger;
@@ -25,12 +26,12 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
-        try {
+        //try {
             userService.saveUser(user);
             return new ResponseEntity<String>("User registered successfully", HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<String>("{ \" message\": \"" + e.getMessage() + "\"}", HttpStatus.CONFLICT);
-        }
+//        } catch (UserNotFoundException e) {
+//            return new ResponseEntity<String>("{ \" message\": \"" + e.getMessage() + "\"}", HttpStatus.CONFLICT);
+//        }
     }
 
     @GetMapping("/listofusers")
@@ -41,18 +42,17 @@ public class UserController {
         return responseEntity;
     }
 
-    @PutMapping(path = "/updateuser/{id}")
-    public ResponseEntity<?> updateUserById(@RequestBody User user){
+    @PutMapping(path = "/updateuser")
+    public ResponseEntity<?> updateUser(@RequestBody User user){
 
         ResponseEntity<?> responseEntity;
-       // try {
+        //try {
             final User fetchedUser = userService.updateUser(user);
             responseEntity = new ResponseEntity<User>(fetchedUser, HttpStatus.OK);
 //        } catch (UserNotFoundException e) {
 //            responseEntity = new ResponseEntity<String>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.NOT_FOUND);
 //        }
         return responseEntity;
-
     }
 
     @DeleteMapping(path = "/removeuser/{id}")
@@ -66,6 +66,5 @@ public class UserController {
 //        }
         return responseEntity;
     }
-
 
 }

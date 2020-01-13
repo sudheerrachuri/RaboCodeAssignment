@@ -28,10 +28,12 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+
 
     @Override
     public User updateUser(User updateUser) {
@@ -39,7 +41,12 @@ public class UserServiceImpl implements UserService {
 //        if (user == null) {
 //            throw new UserNotFoundException("Could not update. User not found");
 //        }
-        //user.setComments(updateUser.getComments());
+        user.setEmail(updateUser.getEmail());
+        System.out.println(user);
+        user.setGender(updateUser.getGender());
+        user.setLanguage(updateUser.getLanguage());
+        user.setMobileNumber(updateUser.getMobileNumber());
+        user.setName(updateUser.getName());
         userRepository.save(user);
         return user;
     }

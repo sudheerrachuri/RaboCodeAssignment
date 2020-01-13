@@ -1,12 +1,10 @@
 package com.cts.codeassignment.FormSubmission.beans;
 
-import lombok.Data;
-
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
-@Data
 public class User {
 
     @Id
@@ -21,6 +19,8 @@ public class User {
     private String language;
     @Column(name = "us_email")
     private String email;
+    @Column(name = "us_gender")
+    private String gender;
 
     public int getId() {
         return id;
@@ -60,5 +60,46 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", language='" + language + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
+
+    public User() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getMobileNumber(), user.getMobileNumber()) &&
+                Objects.equals(getLanguage(), user.getLanguage()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getGender(), user.getGender());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getMobileNumber(), getLanguage(), getEmail(), getGender());
     }
 }

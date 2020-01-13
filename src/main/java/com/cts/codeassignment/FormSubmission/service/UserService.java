@@ -8,9 +8,13 @@ public interface UserService {
 
     boolean saveUser(User user);
 
+    //boolean saveUser(int id, User user);
+
     List<User> getUsers();
 
-    User updateUser(User user);
+    //User updateUser(User user);
+
+    User updateUser(User updateUser);
 
     boolean deleteUserById(int id);
 }
