@@ -1,6 +1,5 @@
 package com.cts.codeassignment.FormSubmission.controller;
 
-import com.cts.codeassignment.FormSubmission.Exception.UserNotFoundException;
 import com.cts.codeassignment.FormSubmission.beans.User;
 import com.cts.codeassignment.FormSubmission.service.UserService;
 import org.slf4j.Logger;
@@ -10,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/user")
@@ -25,18 +22,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
-        //try {
-            userService.saveUser(user);
-            return new ResponseEntity<String>("User registered successfully", HttpStatus.CREATED);
-//        } catch (UserNotFoundException e) {
-//            return new ResponseEntity<String>("{ \" message\": \"" + e.getMessage() + "\"}", HttpStatus.CONFLICT);
-//        }
+    public User createUser(@Valid @RequestBody User user) {
+        return userService.updateUser(user);
     }
 
     @GetMapping("/listofusers")
     public ResponseEntity<?> getAllUsers() {
-
         List<User> users = userService.getUsers();
         ResponseEntity<?> responseEntity = new ResponseEntity<List<User>>(users, HttpStatus.OK);
         return responseEntity;
@@ -44,26 +35,18 @@ public class UserController {
 
     @PutMapping(path = "/updateuser")
     public ResponseEntity<?> updateUser(@RequestBody User user){
-
         ResponseEntity<?> responseEntity;
-        //try {
             final User fetchedUser = userService.updateUser(user);
             responseEntity = new ResponseEntity<User>(fetchedUser, HttpStatus.OK);
-//        } catch (UserNotFoundException e) {
-//            responseEntity = new ResponseEntity<String>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.NOT_FOUND);
-//        }
         return responseEntity;
     }
 
     @DeleteMapping(path = "/removeuser/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable("id") final int id) {
+    public ResponseEntity<?> deleteUserById(@PathVariable("id") final String id) {
         ResponseEntity<?> responseEntity;
-        //try {
-            userService.deleteUserById(id);
-            responseEntity = new ResponseEntity<String>("User deleted successfully", HttpStatus.OK);
-//        } catch (UserNotFoundException e) {
-//            responseEntity = new ResponseEntity<String>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.NOT_FOUND);
-//        }
+       int  resultId = Integer.parseInt(id);
+            userService.deleteUserById(resultId);
+            responseEntity = new ResponseEntity<String>(HttpStatus.OK);
         return responseEntity;
     }
 

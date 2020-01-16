@@ -1,5 +1,6 @@
 package com.cts.codeassignment.FormSubmission.beans;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -10,16 +11,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "us_id")
+    @Nonnull
     private int id;
     @Column(name = "us_name")
+    @Nonnull
     private String name;
     @Column(name = "us_mobilenumber")
+    @Nonnull
     private String mobileNumber;
     @Column(name = "us_language")
+    @Nonnull
     private String language;
     @Column(name = "us_email")
+    @Nonnull
     private String email;
     @Column(name = "us_gender")
+    @Nonnull
     private String gender;
 
     public int getId() {

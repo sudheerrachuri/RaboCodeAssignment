@@ -1,6 +1,9 @@
 package com.cts.codeassignment.FormSubmission.service;
 
 import com.cts.codeassignment.FormSubmission.beans.User;
+import com.cts.codeassignment.FormSubmission.exception.UserListNotFoundException;
+import com.cts.codeassignment.FormSubmission.exception.UserManagementException;
+import com.cts.codeassignment.FormSubmission.exception.UserNotFoundException;
 import com.cts.codeassignment.FormSubmission.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +24,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean saveUser(User user) {
         Optional<User> existingUser = userRepository.findById(user.getId());
-//        if (existingUser.isPresent()) {
-//            //throw new UserAlreadyExistsException("User with id already exists");
-//        }
+        if (existingUser.isPresent()) {
+            throw new UserManagementException("Exception occurred while saving the user details");
+        }
         userRepository.save(user);
         return true;
     }
@@ -31,32 +34,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return userRepository.findAll();
+        List<User> user = userRepository.findAll();
+
+        if (!user.isEmpty()) {
+            return userRepository.findAll();
+        }
+
+        throw new UserListNotFoundException("No Users Found");
+
     }
 
 
     @Override
     public User updateUser(User updateUser) {
+        LOGGER.info("start of uppdate method");
+        LOGGER.debug("updateUser obj -> {}", updateUser);
         final User user = userRepository.findById(updateUser.getId()).orElse(null);
-//        if (user == null) {
-//            throw new UserNotFoundException("Could not update. User not found");
-//        }
-        user.setEmail(updateUser.getEmail());
-        System.out.println(user);
-        user.setGender(updateUser.getGender());
-        user.setLanguage(updateUser.getLanguage());
-        user.setMobileNumber(updateUser.getMobileNumber());
-        user.setName(updateUser.getName());
-        userRepository.save(user);
-        return user;
-    }
+        if (user == null) {
+            throw new UserNotFoundException("Could not update. User not found");
+        }
+        try {
+            user.setName(updateUser.getName());
+            user.setMobileNumber(updateUser.getMobileNumber());
+            user.setEmail(updateUser.getEmail());
+            user.setLanguage(updateUser.getLanguage());
+            user.setGender(updateUser.getGender());
+            LOGGER.debug("user obj -> {}", user);
+            return userRepository.save(user);
+        }
+        catch(Exception e){
+       throw new UserManagementException("Exception occurred while updating the customer details", e);
+    }}
 
     @Override
     public boolean deleteUserById(int id) {
         final User user = userRepository.findById(id).orElse(null);
-//        if (user == null) {
-//            throw new UserNotFoundException("Could not delete. User not found");
-//        }
+        if (user == null) {
+            throw new UserNotFoundException("Could not delete. User not found");
+        }
         userRepository.delete(user);
         return true;
     }
