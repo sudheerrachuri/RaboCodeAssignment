@@ -21,10 +21,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public User createUser(@Valid @RequestBody User user) {
+    @PostMapping("/registeruser")
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         LOGGER.info("start of create user method");
-        return userService.updateUser(user);
+        userService.saveUser(user);
+        ResponseEntity<?> responseEntity = new ResponseEntity<List<User>>(HttpStatus.OK);
+        return responseEntity;
     }
 
     @GetMapping("/listofusers")

@@ -20,17 +20,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         error.setError(ex.getMessage());
         error.setStatus(HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-
-    }
-
-    @ExceptionHandler(UserListNotFoundException.class)
-    public ResponseEntity<ErrorMessage> userListHandler(Exception ex, WebRequest request) throws IOException{
-        ErrorMessage error=new ErrorMessage();
-        error.setTimestamp(LocalDateTime.now());
-        error.setError(ex.getMessage());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-
     }
 
     @ExceptionHandler(UserManagementException.class)
@@ -40,7 +29,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         error.setError(ex.getMessage());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
-
     }
 }
 
