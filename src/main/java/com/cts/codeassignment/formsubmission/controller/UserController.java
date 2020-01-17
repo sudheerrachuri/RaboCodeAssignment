@@ -22,10 +22,10 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/registeruser")
-    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         LOGGER.info("start of create user method");
-        userService.saveUser(user);
-        ResponseEntity<?> responseEntity = new ResponseEntity<List<User>>(HttpStatus.OK);
+        User userResponse=userService.saveUser(user);
+        ResponseEntity<User> responseEntity = new ResponseEntity<>(userResponse,HttpStatus.OK);
         return responseEntity;
     }
 

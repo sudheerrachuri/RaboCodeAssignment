@@ -25,7 +25,7 @@ public class UserServiceImplTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImplTest.class);
 
-    public static long getId() {
+    public static int getId() {
         return id;
     }
 
@@ -67,17 +67,16 @@ public class UserServiceImplTest {
     @Test
     @Order(2)
     public void testCreateUser() {
-        LOGGER.info("start of create user test");
         User user = new User();
         user.setName("admin");
         user.setMobileNumber("8907654321");
         user.setLanguage("English");
         user.setEmail("admin@gmail.com");
         user.setGender("male");
-        ResponseEntity<User> postResponse = restTemplate.postForEntity(getUrl() + "/customerManagement/user/register", user, User.class);
+        ResponseEntity<User> postResponse = restTemplate.postForEntity(getUrl() + "/customerManagement/user/registeruser", user, User.class);
         user=postResponse.getBody();
         this.setId(user.getId());
-        LOGGER.debug("id===>{}"+this.getId());
+        System.out.println("id===>{}"+this.getId());
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
         LOGGER.info("end of create user test");
@@ -93,9 +92,18 @@ public class UserServiceImplTest {
         user.setLanguage("Dutch");
         user.setEmail("user@gmail.com");
         user.setGender("female");
-        restTemplate.put(getUrl() + "/customerManagement/user/updateuser/" + this.getId(), user);
+        user.setId(this.getId());
+
+        System.out.println("=====>"+this.getId());
+        //restTemplate.put(getUrl() + "/customerManagement/user/updateuser/" + this.getId(), user);
+        HttpEntity<User> entity = new HttpEntity<>(user, new HttpHeaders());
+        ResponseEntity<String> response = restTemplate.exchange(getUrl() + "/customerManagement/user/updateuser", HttpMethod.PUT, entity, String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
         LOGGER.info("end of update user test");
     }
+
 
     @Test
     @Order(4)
@@ -109,4 +117,13 @@ public class UserServiceImplTest {
         }
         LOGGER.info("end of delete user test");
     }
+
+    @Test
+    @Order(5)
+    public void testExceptionThrown() {
+        HttpEntity<String> entity = new HttpEntity<>(null, new HttpHeaders());
+        ResponseEntity<String> response = restTemplate.exchange(getUrl() + "/userManagement/user/deleteuser/" + this.getId(), HttpMethod.DELETE, entity, String.class);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }
+
