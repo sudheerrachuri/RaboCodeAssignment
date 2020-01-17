@@ -1,4 +1,4 @@
-package com.cts.codeassignment.FormSubmission.beans;
+package com.cts.codeassignment.formsubmission.beans;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;

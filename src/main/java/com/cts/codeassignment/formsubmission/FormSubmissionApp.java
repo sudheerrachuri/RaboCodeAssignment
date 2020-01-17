@@ -1,4 +1,4 @@
-package com.cts.codeassignment.FormSubmission;
+package com.cts.codeassignment.formsubmission;
 
 import org.springframework.boot.SpringApplication;
 
@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class App extends SpringBootServletInitializer {
+public class FormSubmissionApp extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(App.class);
+        return application.sources(FormSubmissionApp.class);
     }
 
     public static void main(String args[]) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(FormSubmissionApp.class, args);
     }
 }

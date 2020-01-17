@@ -1,20 +1,13 @@
-package com.cts.codeassignment.FormSubmission.service;
+package com.cts.codeassignment.formsubmission.service;
 
-import com.cts.codeassignment.FormSubmission.beans.User;
+import com.cts.codeassignment.formsubmission.beans.User;
 
 import java.util.List;
 
 public interface UserService {
 
     boolean saveUser(User user);
-
-    //boolean saveUser(int id, User user);
-
     List<User> getUsers();
-
-    //User updateUser(User user);
-
     User updateUser(User updateUser);
-
     boolean deleteUserById(int id);
 }

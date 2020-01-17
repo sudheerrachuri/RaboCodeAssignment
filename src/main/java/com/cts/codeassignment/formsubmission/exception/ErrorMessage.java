@@ -1,4 +1,4 @@
-package com.cts.codeassignment.FormSubmission.exception;
+package com.cts.codeassignment.formsubmission.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

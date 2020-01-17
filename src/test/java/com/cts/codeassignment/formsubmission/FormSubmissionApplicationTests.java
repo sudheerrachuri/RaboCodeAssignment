@@ -1,4 +1,4 @@
-package com.cts.codeassignment.FormSubmission;
+package com.cts.codeassignment.formsubmission;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

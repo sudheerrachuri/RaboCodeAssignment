@@ -1,6 +1,6 @@
-package com.cts.codeassignment.FormSubmission.repository;
+package com.cts.codeassignment.formsubmission.repository;
 
-import com.cts.codeassignment.FormSubmission.beans.User;
+import com.cts.codeassignment.formsubmission.beans.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
